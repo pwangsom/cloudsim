@@ -49,6 +49,10 @@ public class CloudSimExample8 {
 
 	/** The vmList. */
 	private static List<Vm> vmList;
+	
+	private static List<Cloudlet> cloudletList2; //added by OOA
+
+	private static List<Vm> vmList2; //added by OOA
 
 	private static List<Vm> createVM(int userId, int vms, int idShift) {
 		//Creates a container to store VMs. This list is passed to the broker later
@@ -132,12 +136,21 @@ public class CloudSimExample8 {
 			//Fourth step: Create VMs and Cloudlets and send them to broker
 			vmList = createVM(brokerId, 5, 0); //creating 5 vms
 			cloudletList = createCloudlet(brokerId, 10, 0); // creating 10 cloudlets
+			
+			//vmList2 = createVM(brokerId, 5, 0); //creating 5 vms //added by OOA
+			//cloudletList2 = createCloudlet(brokerId, 10, 0); // creating 10 cloudlets //added by OOA 
 
-			broker.submitVmList(vmList);
-			broker.submitCloudletList(cloudletList);
+			// broker.submitVmList(vmList);
+			// broker.submitCloudletList(cloudletList);
 
 			// Fifth step: Starts the simulation
 			CloudSim.startSimulation();
+			
+/*			broker.submitVmList(vmList);
+			broker.submitCloudletList(cloudletList);*/
+			
+			//broker.submitVmList(vmList2);
+			//broker.submitCloudletList(cloudletList2);
 
 			// Final step: Print results when simulation is over
 			List<Cloudlet> newList = broker.getCloudletReceivedList();
@@ -288,7 +301,7 @@ public class CloudSimExample8 {
 
 	public static class GlobalBroker extends SimEntity {
 
-		private static final int CREATE_BROKER = 0;
+		private static final int CREATE_BROKER = 6;
 		private List<Vm> vmList;
 		private List<Cloudlet> cloudletList;
 		private DatacenterBroker broker;

@@ -145,32 +145,44 @@ public class DatacenterBroker extends SimEntity {
 	public void bindCloudletToVm(int cloudletId, int vmId) {
 		CloudletList.getById(getCloudletList(), cloudletId).setVmId(vmId);
 	}
+	
+	protected int processEventLogId = 0;
+	
+	protected void printLogOfProcessEvent(String logEventName){
+		Log.printLine(getName() + ": processEventLogId: [" + processEventLogId + ", " + logEventName + "]");
+	}
 
 	@Override
 	public void processEvent(SimEvent ev) {
 		switch (ev.getTag()) {
 		// Resource characteristics request
 			case CloudSimTags.RESOURCE_CHARACTERISTICS_REQUEST:
+				printLogOfProcessEvent("CloudSimTags.RESOURCE_CHARACTERISTICS_REQUEST");
 				processResourceCharacteristicsRequest(ev);
 				break;
 			// Resource characteristics answer
 			case CloudSimTags.RESOURCE_CHARACTERISTICS:
+				printLogOfProcessEvent("CloudSimTags.RESOURCE_CHARACTERISTICS");
 				processResourceCharacteristics(ev);
 				break;
 			// VM Creation answer
 			case CloudSimTags.VM_CREATE_ACK:
+				printLogOfProcessEvent("CloudSimTags.VM_CREATE_ACK");
 				processVmCreate(ev);
 				break;
 			// A finished cloudlet returned
 			case CloudSimTags.CLOUDLET_RETURN:
+				printLogOfProcessEvent("CloudSimTags.CLOUDLET_RETURN");
 				processCloudletReturn(ev);
 				break;
 			// if the simulation finishes
 			case CloudSimTags.END_OF_SIMULATION:
+				printLogOfProcessEvent("CloudSimTags.END_OF_SIMULATION");
 				shutdownEntity();
 				break;
 			// other unknown tags are processed by this method
 			default:
+				printLogOfProcessEvent("Default");
 				processOtherEvent(ev);
 				break;
 		}
